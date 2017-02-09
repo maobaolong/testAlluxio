@@ -34,9 +34,6 @@ public class TestAlluxio {
   boolean go = false;
   public static void main(String[] args) throws IOException, InterruptedException {
     final TestAlluxio ta = new TestAlluxio();
-
-
-
     Options opts = new Options();
     opts.addOption("h", false, "help");
     opts.addOption("path", true, "alluxio file path. default " + DEFAULT_PATH);
@@ -72,7 +69,7 @@ public class TestAlluxio {
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4000);
     for (int i = 0; i < 4000; i++) {
       if (i % 40 == 0) {
-        Thread.sleep(30 * 1000L);
+        Thread.sleep(10 * 1000L);
         System.out.printf("precent %d  .\n", i / 40);
       }
       fixedThreadPool.execute(new Runnable() {
