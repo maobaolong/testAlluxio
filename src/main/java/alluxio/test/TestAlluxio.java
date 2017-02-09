@@ -19,6 +19,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -155,6 +156,7 @@ public class TestAlluxio {
     System.out.println("start test:");
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
     int step = ta.testCount / 100;
+    final CountDownLatch endLatch = new CountDownLatch(ta.testCount);
     for (int i = 0; i < ta.testCount; i++) {
 
 
@@ -166,10 +168,12 @@ public class TestAlluxio {
           } else if (ta.testIndex == 1) {
             ta.doTest1();
           }
+          endLatch.countDown();
         }
       });
 
     }
+    endLatch.await();
     fixedThreadPool.shutdown();
     System.out.println("test Ok!");
     if (!ta.go) {
