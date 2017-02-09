@@ -56,14 +56,19 @@ public class TestAlluxio {
       try
       {
         OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE);
-        FileInStream in = closer.register( ((alluxio.client.file.FileSystem)fileSystem).openFile(new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
+        FileInStream in = closer.register( ((alluxio.client.file.FileSystem)fileSystem).openFile
+            (new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
         byte[] buf = new byte[8 * Constants.MB];
         while (in.read(buf) != -1) {
         }
+        in.close();
+        in = null;
       } catch (Exception e) {
         throw closer.rethrow(e);
       } finally {
         closer.close();
+
+
       }
     } catch (IOException e) {
       e.printStackTrace();
