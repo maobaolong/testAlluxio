@@ -72,7 +72,7 @@ public class TestAlluxio {
       FileSystem fileSystem = path.getFileSystem(configuration);
 
       long size = fileSystem.getFileStatus(path).getLen();
-      System.out.println("size: " + size);
+//      System.out.println("size: " + size);
       FSDataInputStream inputStream = fileSystem.open(path);
       inputStream.close();
     }
