@@ -47,10 +47,10 @@ public class TestAlluxio {
       Path path = new Path(alluxioFilePath);
       Configuration configuration = new Configuration();
 //FileSystem fileSystem = path.getFileSystem(configuration);
-      FileSystem fileSystem = FileSystem.get(path.toUri(), configuration);
+      alluxio.client.file.FileSystem fileSystem = alluxio.client.file.FileSystem.Factory.get();
       System.out.println("fileSystem = " + fileSystem);
 
-      long size = fileSystem.getFileStatus(path).getLen();
+//      long size = fileSystem.getFileStatus(path).getLen();
 // System.out.println("size: " + size);
       Closer closer = Closer.create();
       try
