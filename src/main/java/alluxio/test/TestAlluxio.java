@@ -27,11 +27,38 @@ import java.util.concurrent.Executors;
  * @version 1.0.0
  */
 public class TestAlluxio {
+  private static final int TEST_COUNT = 4000;
   private static final String DEFAULT_PATH =
       "alluxio://172.16.150.101:19998/ns2/user/maobaolong/mbltest/mbltest.txt";
+
   String alluxioFilePath = DEFAULT_PATH;
+  int testCount = TEST_COUNT;
   boolean keepOpen = false;
   boolean go = false;
+
+  public void doTest() {
+    try {
+      Path path = new Path(alluxioFilePath);
+      Configuration configuration = new Configuration();
+      FileSystem fileSystem = path.getFileSystem(configuration);
+      long size = fileSystem.getFileStatus(path).getLen();
+//      System.out.println("size: " + size);
+      FSDataInputStream inputStream = fileSystem.open(path);
+      if (!keepOpen) {
+        inputStream.close();
+      }
+      /*while (!go) {
+        //System.out.println("I am alive!");
+        Thread.sleep(60 * 1000L);
+      }*/
+    } catch (IOException e) {
+      e.printStackTrace();
+    } /*catch (InterruptedException e) {
+      e.printStackTrace();
+    }*/
+  }
+
+
   public static void main(String[] args) throws IOException, InterruptedException {
     final TestAlluxio ta = new TestAlluxio();
     Options opts = new Options();
@@ -39,6 +66,7 @@ public class TestAlluxio {
     opts.addOption("path", true, "alluxio file path. default " + DEFAULT_PATH);
     opts.addOption("go", false, "after everything done, terminate.");
     opts.addOption("keepOpen", false, "keey open.");
+    opts.addOption("testCount", false, "test count default " + TEST_COUNT);
     BasicParser parser = new BasicParser();
     CommandLine cl;
     try {
@@ -53,6 +81,7 @@ public class TestAlluxio {
             ta.alluxioFilePath = cl.getOptionValue("path");
           }
           ta.go = cl.hasOption("go");
+          ta.keepOpen = cl.hasOption("keepOpen");
         }
       } else {
         System.out.println("You are using default argument, use -h argument to get help.");
@@ -63,14 +92,15 @@ public class TestAlluxio {
     }
     System.out.println("path : " + ta.alluxioFilePath);
     System.out.println("go : " + ta.go);
-    System.out.println("keepOpen : " + cl.hasOption("keepOpen"));
+    System.out.println("keepOpen : " + ta.keepOpen);
+    System.out.println("testCount : " + ta.testCount);
     System.out.println("start test:");
-    //    AlluxioURI path = new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt");
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4000);
-    for (int i = 0; i < 4000; i++) {
-      if (i % 40 == 0) {
+    int step = ta.testCount / 100;
+    for (int i = 0; i < ta.testCount; i++) {
+      if (i % step == 0) {
         Thread.sleep(10 * 1000L);
-        System.out.printf("precent %d  .\n", i / 40);
+        System.out.printf(" %d / %d .\n", i / 40, 100);
       }
       fixedThreadPool.execute(new Runnable() {
         @Override
@@ -78,34 +108,11 @@ public class TestAlluxio {
           ta.doTest();
         }
       });
-
     }
     System.out.println("test Ok!");
     while (!ta.go) {
       System.out.println("I am alive!");
       Thread.sleep(60 * 1000L);
     }
-  }
-
-  public void doTest() {
-    try {
-      Path path = new Path(alluxioFilePath);
-      Configuration configuration = new Configuration();
-      FileSystem fileSystem = path.getFileSystem(configuration);
-
-      long size = fileSystem.getFileStatus(path).getLen();
-//      System.out.println("size: " + size);
-      FSDataInputStream inputStream = fileSystem.open(path);
-      if (!keepOpen)
-        inputStream.close();
-      /*while (!go) {
-        //System.out.println("I am alive!");
-        Thread.sleep(60 * 1000L);
-      }*/
-    }catch(IOException e){
-      e.printStackTrace();
-    } /*catch (InterruptedException e) {
-      e.printStackTrace();
-    }*/
   }
 }
