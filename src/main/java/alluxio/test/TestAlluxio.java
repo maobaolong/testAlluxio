@@ -156,21 +156,18 @@ public class TestAlluxio {
 
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
-      /*ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
-      *//*if (i % step == 0) {
-        Thread.sleep(100);
-        System.out.printf(" %d / %d .\n", i / step, 100);
-      }*//*
+      ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
+
       fixedThreadPool.execute(new Runnable() {
         @Override
         public void run() {
           if (ta.testIndex == 0) {
-            ta.doTest0();
+            //ta.doTest0();
           } else if (ta.testIndex == 1) {
             ta.doTest1();
           }
         }
-      });*/
+      });
     }
 //    fixedThreadPool.shutdown();
     System.out.println("test Ok!");
