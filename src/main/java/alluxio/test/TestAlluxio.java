@@ -72,6 +72,7 @@ public class TestAlluxio {
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4000);
     for (int i = 0; i < 4000; i++) {
       if (i % 40 == 0) {
+        Thread.sleep(30 * 1000L);
         System.out.printf("precent %d  .\n", i / 40);
       }
       fixedThreadPool.execute(new Runnable() {
@@ -101,7 +102,7 @@ public class TestAlluxio {
       if (!keepOpen)
         inputStream.close();
       while (!go) {
-        System.out.println("I am alive!");
+        //System.out.println("I am alive!");
         Thread.sleep(60 * 1000L);
       }
     }catch(IOException e){
