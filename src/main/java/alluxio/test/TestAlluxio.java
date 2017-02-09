@@ -81,7 +81,7 @@ public class TestAlluxio {
 
     }
     System.out.println("test Ok!");
-    while (ta.go) {
+    while (!ta.go) {
       System.out.println("I am alive!");
       Thread.sleep(60 * 1000L);
     }
