@@ -144,9 +144,10 @@ public class TestAlluxio {
     System.out.println("keepOpen : " + ta.keepOpen);
     System.out.println("testCount : " + ta.testCount);
     System.out.println("start test:");
-    ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4000);
+
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
+      ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
       if (i % step == 0) {
         Thread.sleep(100);
         System.out.printf(" %d / %d .\n", i / 40, 100);
@@ -162,7 +163,7 @@ public class TestAlluxio {
         }
       });
     }
-    fixedThreadPool.shutdown();
+//    fixedThreadPool.shutdown();
     System.out.println("test Ok!");
     while (!ta.go) {
       System.out.println("I am alive!");
