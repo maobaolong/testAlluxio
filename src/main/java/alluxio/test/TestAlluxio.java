@@ -151,7 +151,7 @@ public class TestAlluxio {
       ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
       if (i % step == 0) {
         Thread.sleep(100);
-        System.out.printf(" %d / %d .\n", i / 40, 100);
+        System.out.printf(" %d / %d .\n", i / step, 100);
       }
       fixedThreadPool.execute(new Runnable() {
         @Override
