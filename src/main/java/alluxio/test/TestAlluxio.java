@@ -172,9 +172,9 @@ public class TestAlluxio {
     }
     fixedThreadPool.shutdown();
     System.out.println("test Ok!");
-//    while (!ta.go) {
-//      System.out.println("I am alive!");
-//      Thread.sleep(60 * 1000L);
-//    }
+    if (!ta.go) {
+     System.out.println("I am alive!");
+     Thread.sleep(60 * 1000L);
+   }
   }
 }
