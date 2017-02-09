@@ -144,6 +144,14 @@ public class TestAlluxio {
     System.out.println("go : " + ta.go);
     System.out.println("keepOpen : " + ta.keepOpen);
     System.out.println("testCount : " + ta.testCount);
+    System.out.println("testIndex : " + ta.testIndex);
+
+    System.out.println("After 3 second , test will started !");
+    for(int i=0;i<3;i++){
+      System.out.println(i);
+      Thread.sleep(1000);
+    }
+
     System.out.println("start test:");
 
     int step = ta.testCount / 100;
