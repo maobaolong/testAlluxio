@@ -35,8 +35,8 @@
       <groupId>org.alluxio</groupId>
       <artifactId>alluxio-core-client</artifactId>
       <version>1.4.0-RC1</version>
-      <!--<scope>system</scope>-->
-      <!--<systemPath>${project.basedir}/lib/alluxio-core-client-1.4.0-RC1-jar-with-dependencies.jar</systemPath>-->
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/alluxio-core-client-1.4.0-RC1-jar-with-dependencies.jar</systemPath>
     </dependency>
 
   </dependencies>
