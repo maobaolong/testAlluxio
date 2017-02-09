@@ -178,7 +178,7 @@ public class TestAlluxio {
     endLatch.await();
     fixedThreadPool.shutdown();
     System.out.println("test Ok!");
-    if (!ta.go) {
+    while (!ta.go) {
      System.out.println("I am alive!");
      Thread.sleep(60 * 1000L);
    }
