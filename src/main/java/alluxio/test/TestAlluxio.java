@@ -24,7 +24,7 @@ public class TestAlluxio {
   public static void main(String[] args) throws IOException {
     System.out.println("go:");
 //    AlluxioURI path = new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt");
-    Path path = new Path("alluxio://ns2/user/maobaolong/mbltest/mbltest.txt");
+    Path path = new Path("alluxio://172.16.150.101:19998/ns2/user/maobaolong/mbltest/mbltest.txt");
     Configuration configuration = new Configuration();
     FileSystem fileSystem = path.getFileSystem(configuration);
 
