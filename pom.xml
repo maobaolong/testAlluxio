@@ -31,6 +31,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
@@ -40,8 +45,8 @@
       <groupId>org.alluxio</groupId>
       <artifactId>alluxio-core-client</artifactId>
       <version>1.4.0-RC1</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/lib/alluxio-core-client-1.4.0-RC1-jar-with-dependencies.jar</systemPath>
+      <!--<scope>system</scope>-->
+      <!--<systemPath>${project.basedir}/lib/alluxio-core-client-1.4.0-RC1-jar-with-dependencies.jar</systemPath>-->
     </dependency>
 
   </dependencies>
@@ -97,6 +102,22 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>alluxio.test.TestAlluxio</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 
