@@ -153,24 +153,24 @@ public class TestAlluxio {
     }
 
     System.out.println("start test:");
-
+    ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
-      ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
+
 
       fixedThreadPool.execute(new Runnable() {
         @Override
         public void run() {
           if (ta.testIndex == 0) {
-            //ta.doTest0();
+            ta.doTest0();
           } else if (ta.testIndex == 1) {
             ta.doTest1();
           }
         }
       });
-      fixedThreadPool.shutdown();
-    }
 
+    }
+    fixedThreadPool.shutdown();
     System.out.println("test Ok!");
 //    while (!ta.go) {
 //      System.out.println("I am alive!");
