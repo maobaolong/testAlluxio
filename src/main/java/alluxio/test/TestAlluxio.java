@@ -65,7 +65,7 @@ public class TestAlluxio {
     //    AlluxioURI path = new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt");
     for (int i = 0; i < 4000; i++) {
       if (i % 40 == 0) {
-        System.out.printf("precent %d%.\n", i / 40);
+        System.out.printf("precent %d  .\n", i / 40);
       }
       Path path = new Path(alluxioFilePath);
       Configuration configuration = new Configuration();
