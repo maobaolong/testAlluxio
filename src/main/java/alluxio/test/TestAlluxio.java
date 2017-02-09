@@ -34,15 +34,39 @@ import java.util.concurrent.Executors;
  */
 public class TestAlluxio {
   private static final int TEST_COUNT = 100;
+  private static final int TEST_INDEX = 0;
   private static final String DEFAULT_PATH =
       "alluxio://172.16.150.101:19998/ns2/user/maobaolong/mbltest/mbltest.txt";
 
   String alluxioFilePath = DEFAULT_PATH;
   int testCount = TEST_COUNT;
+  int testIndex = TEST_INDEX;
   boolean keepOpen = false;
   boolean go = false;
 
-  public void doTest() {
+  public void doTest0() {
+    try {
+      Path path = new Path(alluxioFilePath);
+      Configuration configuration = new Configuration();
+      FileSystem fileSystem = path.getFileSystem(configuration);
+      long size = fileSystem.getFileStatus(path).getLen();
+//      System.out.println("size: " + size);
+      FSDataInputStream inputStream = fileSystem.open(path);
+      if (!keepOpen) {
+        inputStream.close();
+      }
+      /*while (!go) {
+        //System.out.println("I am alive!");
+        Thread.sleep(60 * 1000L);
+      }*/
+    } catch (IOException e) {
+      e.printStackTrace();
+    } /*catch (InterruptedException e) {
+      e.printStackTrace();
+    }*/
+  }
+
+  public void doTest1() {
     try {
       Path path = new Path(alluxioFilePath);
       Configuration configuration = new Configuration();
@@ -53,10 +77,9 @@ public class TestAlluxio {
 //      long size = fileSystem.getFileStatus(path).getLen();
 // System.out.println("size: " + size);
       Closer closer = Closer.create();
-      try
-      {
+      try {
         OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE);
-        FileInStream in = closer.register( ((alluxio.client.file.FileSystem)fileSystem).openFile
+        FileInStream in = closer.register(((alluxio.client.file.FileSystem) fileSystem).openFile
             (new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
         byte[] buf = new byte[8 * Constants.MB];
         while (in.read(buf) != -1) {
@@ -85,7 +108,8 @@ public class TestAlluxio {
     opts.addOption("path", true, "alluxio file path. default " + DEFAULT_PATH);
     opts.addOption("go", false, "after everything done, terminate.");
     opts.addOption("keepOpen", false, "keey open.");
-    opts.addOption("testCount", false, "test count default " + TEST_COUNT);
+    opts.addOption("testCount", true, "test count default " + TEST_COUNT);
+    opts.addOption("testIndex", true, "test index.");
     BasicParser parser = new BasicParser();
     CommandLine cl;
     try {
@@ -101,6 +125,12 @@ public class TestAlluxio {
           }
           ta.go = cl.hasOption("go");
           ta.keepOpen = cl.hasOption("keepOpen");
+          if (cl.hasOption("testCount")) {
+            ta.testCount = Integer.parseInt(cl.getOptionValue("testCount"));
+          }
+          if (cl.hasOption("testIndex")) {
+            ta.testIndex = Integer.parseInt(cl.getOptionValue("testIndex"));
+          }
         }
       } else {
         System.out.println("You are using default argument, use -h argument to get help.");
@@ -124,7 +154,11 @@ public class TestAlluxio {
       fixedThreadPool.execute(new Runnable() {
         @Override
         public void run() {
-          ta.doTest();
+          if (ta.testIndex == 0) {
+            ta.doTest0();
+          } else if (ta.testIndex == 1) {
+            ta.doTest1();
+          }
         }
       });
     }
