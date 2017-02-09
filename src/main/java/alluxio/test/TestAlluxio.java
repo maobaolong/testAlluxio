@@ -101,10 +101,10 @@ public class TestAlluxio {
       FSDataInputStream inputStream = fileSystem.open(path);
       if (!keepOpen)
         inputStream.close();
-      while (!go) {
+      /*while (!go) {
         //System.out.println("I am alive!");
         Thread.sleep(60 * 1000L);
-      }
+      }*/
     }catch(IOException e){
       e.printStackTrace();
     } catch (InterruptedException e) {
