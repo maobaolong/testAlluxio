@@ -157,10 +157,10 @@ public class TestAlluxio {
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
       ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
-      if (i % step == 0) {
+      /*if (i % step == 0) {
         Thread.sleep(100);
         System.out.printf(" %d / %d .\n", i / step, 100);
-      }
+      }*/
       fixedThreadPool.execute(new Runnable() {
         @Override
         public void run() {
@@ -174,9 +174,9 @@ public class TestAlluxio {
     }
 //    fixedThreadPool.shutdown();
     System.out.println("test Ok!");
-    while (!ta.go) {
-      System.out.println("I am alive!");
-      Thread.sleep(60 * 1000L);
-    }
+//    while (!ta.go) {
+//      System.out.println("I am alive!");
+//      Thread.sleep(60 * 1000L);
+//    }
   }
 }
