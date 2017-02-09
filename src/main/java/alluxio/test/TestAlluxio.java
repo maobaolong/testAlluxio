@@ -168,8 +168,9 @@ public class TestAlluxio {
           }
         }
       });
+      fixedThreadPool.shutdown();
     }
-   fixedThreadPool.shutdown();
+
     System.out.println("test Ok!");
 //    while (!ta.go) {
 //      System.out.println("I am alive!");
