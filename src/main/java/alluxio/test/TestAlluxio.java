@@ -113,7 +113,7 @@ public class TestAlluxio {
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
       if (i % step == 0) {
-        Thread.sleep(5);
+        Thread.sleep(100);
         System.out.printf(" %d / %d .\n", i / 40, 100);
       }
       fixedThreadPool.execute(new Runnable() {
