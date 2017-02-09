@@ -67,10 +67,10 @@ public class TestAlluxio {
     Configuration configuration = new Configuration();
     FileSystem fileSystem = path.getFileSystem(configuration);
 
-    //long size = fileSystem.getFileStatus(path).getLen();
-    //System.out.println("size: " + size);
+    long size = fileSystem.getFileStatus(path).getLen();
+    System.out.println("size: " + size);
     FSDataInputStream inputStream = fileSystem.open(path);
-
+    inputStream.close();
     while (!go) {
       Thread.sleep(60 * 1000L);
       System.out.println("I am alive!");
