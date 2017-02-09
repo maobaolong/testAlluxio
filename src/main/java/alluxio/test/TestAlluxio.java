@@ -33,7 +33,7 @@ import java.util.concurrent.Executors;
  * @version 1.0.0
  */
 public class TestAlluxio {
-  private static final int TEST_COUNT = 4000;
+  private static final int TEST_COUNT = 100;
   private static final String DEFAULT_PATH =
       "alluxio://172.16.150.101:19998/ns2/user/maobaolong/mbltest/mbltest.txt";
 
@@ -113,10 +113,10 @@ public class TestAlluxio {
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4000);
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
-      if (i % step == 0) {
-        //Thread.sleep(5 * 1000L);
+      /*if (i % step == 0) {
+        Thread.sleep(5 * 1000L);
         System.out.printf(" %d / %d .\n", i / 40, 100);
-      }
+      }*/
       fixedThreadPool.execute(new Runnable() {
         @Override
         public void run() {
