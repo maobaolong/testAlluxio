@@ -56,16 +56,17 @@ public class TestAlluxio {
       try
       {
         OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE);
-        FileInStream in = closer.register( ((alluxio.client.file.FileSystem)fileSystem).openFile(new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
+        FileInStream in =  ((alluxio.client.file.FileSystem)fileSystem).openFile(new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options);
         byte[] buf = new byte[8 * Constants.MB];
         while (in.read(buf) != -1) {
         }
       } catch (Exception e) {
-        throw closer.rethrow(e);
+        //throw closer.rethrow(e);
+        e.printStackTrace();
       } finally {
-        closer.close();
+       // closer.close();
       }
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     } /*catch (InterruptedException e) {
       e.printStackTrace();
@@ -113,7 +114,7 @@ public class TestAlluxio {
     int step = ta.testCount / 100;
     for (int i = 0; i < ta.testCount; i++) {
       if (i % step == 0) {
-        Thread.sleep(10 * 1000L);
+        //Thread.sleep(5 * 1000L);
         System.out.printf(" %d / %d .\n", i / 40, 100);
       }
       fixedThreadPool.execute(new Runnable() {
