@@ -31,11 +31,11 @@ public class TestAlluxio {
       "alluxio://172.16.150.101:19998/ns2/user/maobaolong/mbltest/mbltest.txt";
   String alluxioFilePath = DEFAULT_PATH;
   boolean keepOpen = false;
-
+  boolean go = false;
   public static void main(String[] args) throws IOException, InterruptedException {
     final TestAlluxio ta = new TestAlluxio();
 
-    boolean go = false;
+
 
     Options opts = new Options();
     opts.addOption("h", false, "help");
@@ -55,7 +55,7 @@ public class TestAlluxio {
           if (cl.hasOption("path")) {
             ta.alluxioFilePath = cl.getOptionValue("path");
           }
-          go = cl.hasOption("go");
+          ta.go = cl.hasOption("go");
         }
       } else {
         System.out.println("You are using default argument, use -h argument to get help.");
@@ -65,7 +65,7 @@ public class TestAlluxio {
       return;
     }
     System.out.println("path : " + ta.alluxioFilePath);
-    System.out.println("go : " + go);
+    System.out.println("go : " + ta.go);
     System.out.println("keepOpen : " + cl.hasOption("keepOpen"));
     System.out.println("start test:");
     //    AlluxioURI path = new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt");
@@ -83,7 +83,7 @@ public class TestAlluxio {
 
     }
     System.out.println("test Ok!");
-    while (!go) {
+    while (ta.go) {
       System.out.println("I am alive!");
       Thread.sleep(60 * 1000L);
     }
@@ -100,7 +100,13 @@ public class TestAlluxio {
       FSDataInputStream inputStream = fileSystem.open(path);
       if (!keepOpen)
         inputStream.close();
+      while (!go) {
+        System.out.println("I am alive!");
+        Thread.sleep(60 * 1000L);
+      }
     }catch(IOException e){
+      e.printStackTrace();
+    } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
