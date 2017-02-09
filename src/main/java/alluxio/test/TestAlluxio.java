@@ -63,14 +63,20 @@ public class TestAlluxio {
 
     System.out.println("start test:");
     //    AlluxioURI path = new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt");
-    Path path = new Path(alluxioFilePath);
-    Configuration configuration = new Configuration();
-    FileSystem fileSystem = path.getFileSystem(configuration);
+    for (int i = 0; i < 4000; i++) {
+      if (i % 40 == 0) {
+        System.out.printf("precent %d%.\n", i / 40);
+      }
+      Path path = new Path(alluxioFilePath);
+      Configuration configuration = new Configuration();
+      FileSystem fileSystem = path.getFileSystem(configuration);
 
-    long size = fileSystem.getFileStatus(path).getLen();
-    System.out.println("size: " + size);
-    FSDataInputStream inputStream = fileSystem.open(path);
-    inputStream.close();
+      long size = fileSystem.getFileStatus(path).getLen();
+      System.out.println("size: " + size);
+      FSDataInputStream inputStream = fileSystem.open(path);
+      inputStream.close();
+    }
+
     while (!go) {
       Thread.sleep(60 * 1000L);
       System.out.println("I am alive!");
