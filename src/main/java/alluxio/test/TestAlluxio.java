@@ -6,6 +6,7 @@ import alluxio.Constants;
 import alluxio.client.ReadType;
 import alluxio.client.file.FileInStream;
 import alluxio.client.file.options.OpenFileOptions;
+import alluxio.client.file.policy.FileWriteLocationPolicy;
 import com.google.common.io.Closer;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -78,7 +79,7 @@ public class TestAlluxio {
 // System.out.println("size: " + size);
       Closer closer = Closer.create();
       try {
-        OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.NO_CACHE);
+        OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE);
         FileInStream in = closer.register(((alluxio.client.file.FileSystem) fileSystem).openFile
             (new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
         byte[] buf = new byte[8 * Constants.MB];
