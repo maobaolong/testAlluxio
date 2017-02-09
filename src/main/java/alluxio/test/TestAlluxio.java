@@ -7,6 +7,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
@@ -68,7 +69,7 @@ public class TestAlluxio {
 
     long size = fileSystem.getFileStatus(path).getLen();
     System.out.println("size: " + size);
-//    FSDataInputStream inputStream = fileSystem.open(path);
+    FSDataInputStream inputStream = fileSystem.open(path);
 
     while (!go) {
       Thread.sleep(60 * 1000L);
