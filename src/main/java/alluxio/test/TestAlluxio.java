@@ -1,6 +1,12 @@
 package alluxio.test;
 
 
+import alluxio.AlluxioURI;
+import alluxio.Constants;
+import alluxio.client.ReadType;
+import alluxio.client.file.FileInStream;
+import alluxio.client.file.options.OpenFileOptions;
+import com.google.common.io.Closer;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -40,17 +46,25 @@ public class TestAlluxio {
     try {
       Path path = new Path(alluxioFilePath);
       Configuration configuration = new Configuration();
-      FileSystem fileSystem = path.getFileSystem(configuration);
+//FileSystem fileSystem = path.getFileSystem(configuration);
+      FileSystem fileSystem = FileSystem.get(path.toUri(), configuration);
+      System.out.println("fileSystem = " + fileSystem);
+
       long size = fileSystem.getFileStatus(path).getLen();
-//      System.out.println("size: " + size);
-      FSDataInputStream inputStream = fileSystem.open(path);
-      if (!keepOpen) {
-        inputStream.close();
+// System.out.println("size: " + size);
+      Closer closer = Closer.create();
+      try
+      {
+        OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE);
+        FileInStream in = closer.register( ((alluxio.client.file.FileSystem)fileSystem).openFile(new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
+        byte[] buf = new byte[8 * Constants.MB];
+        while (in.read(buf) != -1) {
+        }
+      } catch (Exception e) {
+        throw closer.rethrow(e);
+      } finally {
+        closer.close();
       }
-      /*while (!go) {
-        //System.out.println("I am alive!");
-        Thread.sleep(60 * 1000L);
-      }*/
     } catch (IOException e) {
       e.printStackTrace();
     } /*catch (InterruptedException e) {
