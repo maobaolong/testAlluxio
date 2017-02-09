@@ -158,8 +158,10 @@ public class TestAlluxio {
     int step = ta.testCount / 100;
     final CountDownLatch endLatch = new CountDownLatch(ta.testCount);
     for (int i = 0; i < ta.testCount; i++) {
-
-
+      if (i % step == 0) {
+        Thread.sleep(100);
+        System.out.printf(" %d / %d .\n", i / step, 100);
+      }
       fixedThreadPool.execute(new Runnable() {
         @Override
         public void run() {
