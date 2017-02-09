@@ -79,7 +79,7 @@ public class TestAlluxio {
 // System.out.println("size: " + size);
       Closer closer = Closer.create();
       try {
-        OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE);
+        OpenFileOptions options = OpenFileOptions.defaults().setReadType(ReadType.CACHE_PROMOTE);
         FileInStream in = closer.register(((alluxio.client.file.FileSystem) fileSystem).openFile
             (new AlluxioURI("/ns2/user/maobaolong/mbltest/mbltest.txt"), options));
         byte[] buf = new byte[8 * Constants.MB];
