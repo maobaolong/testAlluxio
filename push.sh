@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 git add .
-git commit -m "c"
+git commit -m "auto commit"
 git push
