@@ -1,12 +1,5 @@
 package alluxio.test;
 
-
-import alluxio.AlluxioURI;
-import alluxio.Constants;
-import alluxio.client.ReadType;
-import alluxio.client.file.FileInStream;
-import alluxio.client.file.options.OpenFileOptions;
-import com.google.common.io.Closer;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;

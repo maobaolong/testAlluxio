@@ -10,6 +10,16 @@ In test body, we open a file and close it.
 
 ## How to build it
 
+### build alluxio-core-client
+Clone Alluxio source enter alluxio-core-client module, execute mvn to build the jar, after build successful finish, you 
+can get the jar file `alluxio-core-client-1.5.0-SNAPSHOT-jar-with-dependencies.jar`.
+
+```bash
+$ cd ./alluxio/core/client
+$ mvn clean package assembly:single -DskipTests -Dcheckstyle.skip -Dhadoop.version=2.7.1
+```
+
+### build testAlluxio 
 You can get the source to by clone it or download the zip.
 
 Use maven to build it by execute the follow command.
