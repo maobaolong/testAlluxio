@@ -135,6 +135,7 @@ public class TestAlluxio {
     System.out.println("start test:");
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
     int step = ta.testCount / 100;
+    //use CountDownLatch to ensure that until every test finish shutdown the pool.
     final CountDownLatch endLatch = new CountDownLatch(ta.testCount);
     for (int i = 0; i < ta.testCount; i++) {
       if (i % step == 0) {
