@@ -127,7 +127,7 @@ public class TestAlluxio {
 
     System.out.println("start test:");
     ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1);
-    int step = ta.testCount / 100;
+    final int step = ta.testCount / 100;
     //use CountDownLatch to ensure that until every test finish shutdown the pool.
     final CountDownLatch endLatch = new CountDownLatch(ta.testCount);
     for (int i = 0; i < ta.testCount; i++) {
@@ -143,10 +143,17 @@ public class TestAlluxio {
           } /*else if (ta.testIndex == 1) {
             ta.doTest1();
           }*/
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
           endLatch.countDown();
+          System.out.printf(" task count : %d / %d .\n", endLatch.getCount() / step, 100);
         }
       });
     }
+    System.out.println("wait for test done! ");
     endLatch.await();
     fixedThreadPool.shutdown();
     System.out.println("test Ok!");
