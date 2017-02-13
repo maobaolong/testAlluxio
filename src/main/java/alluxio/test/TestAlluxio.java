@@ -143,11 +143,6 @@ public class TestAlluxio {
           } /*else if (ta.testIndex == 1) {
             ta.doTest1();
           }*/
-          try {
-            Thread.sleep(1000);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
           endLatch.countDown();
           System.out.printf(" task count : %d / %d .\n", endLatch.getCount() / step, 100);
         }
