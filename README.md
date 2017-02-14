@@ -57,7 +57,7 @@ usage: Options
 First, execute script `./alluxio-test.sh`, you can see the output as follow:
 
 ```bash
-$ ./alluxio-test.sh -file alluxio://127.0.0.1:19998/ns2/user/maobaolong/mbltest/mbltest.txt
+$ ./alluxio-test.sh -path alluxio://127.0.0.1:19998/ns2/user/maobaolong/mbltest/mbltest.txt
 path : alluxio://127.0.0.1:19998/ns2/user/maobaolong/mbltest/mbltest.txt
 go : false
 keepOpen : false
